@@ -1,12 +1,34 @@
-﻿<Window x:Class="Flappy_Bird.MainWindow"
+﻿<Window x:Class="FlappyBirdWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Flappy_Bird"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Flappy Bird"
+        Width="800" Height="450"
+        KeyDown="Window_KeyDown"
+        Focusable="True"
+        Loaded="Window_Loaded">
 
-    </Grid>
+	<Canvas x:Name="GameCanvas" Background="SkyBlue">
+
+		<Ellipse x:Name="Bird"
+                 Width="30"
+                 Height="30"
+                 Fill="Yellow"/>
+
+		<!-- Pontszám -->
+		<TextBlock x:Name="ScoreText"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Foreground="Black"
+                   Text="0"
+                   Canvas.Left="20"
+                   Canvas.Top="20"/>
+
+		<!-- Game Over -->
+		<TextBlock x:Name="GameOverText"
+                   Text="GAME OVER"
+                   FontSize="48"
+                   FontWeight="Bold"
+                   Foreground="Red"
+                   Visibility="Hidden"/>
+	</Canvas>
 </Window>

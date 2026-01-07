@@ -9,4 +9,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="madar.png" />
+    <None Remove="pipe.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="madar.png" />
+    <Resource Include="pipe.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

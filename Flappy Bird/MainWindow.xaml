@@ -10,11 +10,13 @@
 	<Canvas x:Name="GameCanvas" Background="SkyBlue">
 
 		<Ellipse x:Name="Bird"
-                 Width="30"
-                 Height="30"
-                 Fill="Yellow"/>
+                 Width="62"
+                 Height="46">
+			<Ellipse.Fill>
+				<ImageBrush ImageSource="/madar.png"/>
+			</Ellipse.Fill>
+		</Ellipse>
 
-		<!-- Pontszám -->
 		<TextBlock x:Name="ScoreText"
                    FontSize="24"
                    FontWeight="Bold"
@@ -23,7 +25,13 @@
                    Canvas.Left="20"
                    Canvas.Top="20"/>
 
-		<!-- Game Over -->
+		<Rectangle x:Name="Fog"
+                   Width="800"
+                   Height="450"
+                   Fill="LightGray"
+                   Opacity="0.35"
+                   Visibility="Hidden"/>
+
 		<TextBlock x:Name="GameOverText"
                    Text="GAME OVER"
                    FontSize="48"

@@ -66,7 +66,7 @@ namespace FlappyBirdWPF
 			gameTimer.Tick += GameLoop;
 
 			fogCycleTimer.Interval = TimeSpan.FromSeconds(20);
-			fogCycleTimer.Tick += StartFog;
+			fogCycleTimer.Tick += TryStartFog;
 
 			fogEndTimer.Interval = TimeSpan.FromSeconds(10);
 			fogEndTimer.Tick += EndFog;
@@ -226,14 +226,14 @@ namespace FlappyBirdWPF
 					ScoreText.Text = score.ToString();
 
 					if (score % 5 == 0)
-						StartRain();
+						TryStartRain();
 				}
 			}
 		}
 
-		void StartRain()
+		void TryStartRain()
 		{
-			if (isRaining) return;
+			if (isRaining || isFoggy) return;
 
 			isRaining = true;
 			Fog.Opacity = 0.55;
@@ -249,9 +249,9 @@ namespace FlappyBirdWPF
 			rainEndTimer.Stop();
 		}
 
-		void StartFog(object sender, EventArgs e)
+		void TryStartFog(object sender, EventArgs e)
 		{
-			if (isFoggy) return;
+			if (isFoggy || isRaining) return;
 
 			isFoggy = true;
 			Fog.Visibility = Visibility.Visible;

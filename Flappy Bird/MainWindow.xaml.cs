@@ -192,7 +192,7 @@ namespace FlappyBirdWPF
 
 		void CheckCollision()
 		{
-			Rect birdRect = GetRect(Bird);
+			Rect birdRect = GetBirdHitbox();
 
 			foreach (var pipe in pipes)
 			{
@@ -231,6 +231,19 @@ namespace FlappyBirdWPF
 				StartRain();
 			else
 				StartFog();
+		}
+
+		Rect GetBirdHitbox()
+		{
+			double paddingX = Bird.Width * 0.2;
+			double paddingY = Bird.Height * 0.2;
+
+			return new Rect(
+				Canvas.GetLeft(Bird) + paddingX / 2,
+				Canvas.GetTop(Bird) + paddingY / 2,
+				Bird.Width - paddingX,
+				Bird.Height - paddingY
+			);
 		}
 
 		void StartRain()

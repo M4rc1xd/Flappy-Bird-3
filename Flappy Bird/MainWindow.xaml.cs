@@ -58,8 +58,36 @@ namespace FlappyBirdWPF
 
 			gameTimer.Interval = TimeSpan.FromMilliseconds(20);
 			gameTimer.Tick += GameLoop;
+		}
+
+		private void StartButton_Click(object sender, RoutedEventArgs e)
+		{
+			StartMenu.Visibility = Visibility.Hidden;
+			StartGame();
+		}
+
+		void StartGame()
+		{
+			isGameOver = false;
+			score = 0;
+			ScoreText.Text = "0";
+
+			birdY = 200;
+			birdVelocity = 0;
+			Canvas.SetTop(Bird, birdY);
+
+			foreach (var p in pipes)
+			{
+				GameCanvas.Children.Remove(p.Top);
+				GameCanvas.Children.Remove(p.Bottom);
+			}
+			pipes.Clear();
+
+			GameOverMenu.Visibility = Visibility.Hidden;
+
 			gameTimer.Start();
 		}
+
 
 		private void GameLoop(object sender, EventArgs e)
 		{
@@ -109,7 +137,7 @@ namespace FlappyBirdWPF
 			Rectangle bottom = new Rectangle
 			{
 				Width = 60,
-				Height = 400 - topHeight - gap,
+				Height = 450 - topHeight - gap,
 				Fill = pipeBrush
 			};
 
@@ -191,12 +219,19 @@ namespace FlappyBirdWPF
 
 		void GameOver()
 		{
+			if (isGameOver) return;
+
 			isGameOver = true;
 			gameTimer.Stop();
 
-			GameOverText.Visibility = Visibility.Visible;
-			Canvas.SetLeft(GameOverText, 250);
-			Canvas.SetTop(GameOverText, 150);
+			GameOverMenu.Visibility = Visibility.Visible;
 		}
+
+		private void RestartButton_Click(object sender, RoutedEventArgs e)
+		{
+			StartGame();
+		}
+
+
 	}
 }

@@ -13,9 +13,8 @@ namespace FlappyBirdWPF
 	public partial class MainWindow : Window
 	{
 		DispatcherTimer gameTimer = new DispatcherTimer();
-		DispatcherTimer fogCycleTimer = new DispatcherTimer();
-		DispatcherTimer fogEndTimer = new DispatcherTimer();
-		DispatcherTimer rainEndTimer = new DispatcherTimer();
+		DispatcherTimer weatherTimer = new DispatcherTimer();
+		DispatcherTimer weatherEndTimer = new DispatcherTimer();
 
 		double birdY = 200;
 		double birdVelocity = 0;
@@ -65,14 +64,11 @@ namespace FlappyBirdWPF
 			gameTimer.Interval = TimeSpan.FromMilliseconds(20);
 			gameTimer.Tick += GameLoop;
 
-			fogCycleTimer.Interval = TimeSpan.FromSeconds(20);
-			fogCycleTimer.Tick += TryStartFog;
+			weatherTimer.Interval = TimeSpan.FromSeconds(20);
+			weatherTimer.Tick += WeatherTick;
 
-			fogEndTimer.Interval = TimeSpan.FromSeconds(10);
-			fogEndTimer.Tick += EndFog;
-
-			rainEndTimer.Interval = TimeSpan.FromSeconds(10);
-			rainEndTimer.Tick += EndRain;
+			weatherEndTimer.Interval = TimeSpan.FromSeconds(10);
+			weatherEndTimer.Tick += EndWeather;
 		}
 
 		private void StartButton_Click(object sender, RoutedEventArgs e)
@@ -84,9 +80,8 @@ namespace FlappyBirdWPF
 		void StartGame()
 		{
 			gameTimer.Stop();
-			fogCycleTimer.Stop();
-			fogEndTimer.Stop();
-			rainEndTimer.Stop();
+			weatherTimer.Stop();
+			weatherEndTimer.Stop();
 
 			isGameOver = false;
 			isRaining = false;
@@ -114,7 +109,7 @@ namespace FlappyBirdWPF
 			GameOverMenu.Visibility = Visibility.Hidden;
 
 			gameTimer.Start();
-			fogCycleTimer.Start();
+			weatherTimer.Start();
 		}
 
 		private void GameLoop(object sender, EventArgs e)
@@ -151,7 +146,7 @@ namespace FlappyBirdWPF
 		{
 			int gap = isRaining ? 130 : 150;
 			int topHeight = rnd.Next(50, 200);
-			double spawnX = isFoggy ? 650 : 800;
+			double spawnX = 800;
 
 			Rectangle top = new Rectangle
 			{
@@ -224,47 +219,48 @@ namespace FlappyBirdWPF
 					score++;
 					pipe.Scored = true;
 					ScoreText.Text = score.ToString();
-
-					if (score % 5 == 0)
-						TryStartRain();
 				}
 			}
 		}
 
-		void TryStartRain()
+		private void WeatherTick(object sender, EventArgs e)
 		{
-			if (isRaining || isFoggy) return;
+			if (rnd.NextDouble() > 0.5) return;
 
+			if (rnd.Next(2) == 0)
+				StartRain();
+			else
+				StartFog();
+		}
+
+		void StartRain()
+		{
 			isRaining = true;
+			isFoggy = false;
+			Fog.Visibility = Visibility.Visible;
 			Fog.Opacity = 0.55;
 
-			rainEndTimer.Stop();
-			rainEndTimer.Start();
+			weatherEndTimer.Stop();
+			weatherEndTimer.Start();
 		}
 
-		void EndRain(object sender, EventArgs e)
+		void StartFog()
 		{
-			isRaining = false;
-			Fog.Opacity = 0.35;
-			rainEndTimer.Stop();
-		}
-
-		void TryStartFog(object sender, EventArgs e)
-		{
-			if (isFoggy || isRaining) return;
-
 			isFoggy = true;
+			isRaining = false;
 			Fog.Visibility = Visibility.Visible;
+			Fog.Opacity = 0.35;
 
-			fogEndTimer.Stop();
-			fogEndTimer.Start();
+			weatherEndTimer.Stop();
+			weatherEndTimer.Start();
 		}
 
-		void EndFog(object sender, EventArgs e)
+		void EndWeather(object sender, EventArgs e)
 		{
 			isFoggy = false;
+			isRaining = false;
 			Fog.Visibility = Visibility.Hidden;
-			fogEndTimer.Stop();
+			weatherEndTimer.Stop();
 		}
 
 		void GameOver()
@@ -274,9 +270,8 @@ namespace FlappyBirdWPF
 			isGameOver = true;
 
 			gameTimer.Stop();
-			fogCycleTimer.Stop();
-			fogEndTimer.Stop();
-			rainEndTimer.Stop();
+			weatherTimer.Stop();
+			weatherEndTimer.Stop();
 
 			GameOverMenu.Visibility = Visibility.Visible;
 		}

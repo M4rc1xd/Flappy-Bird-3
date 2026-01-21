@@ -4,52 +4,51 @@
         Title="Flappy Bird"
         Width="800"
         Height="450"
+        ResizeMode="NoResize"
         KeyDown="Window_KeyDown"
         Focusable="True"
         Loaded="Window_Loaded">
 
-	<Canvas x:Name="GameCanvas"
-            Width="800"
-            Height="450"
-            Background="SkyBlue">
+	<Grid>
+		<Canvas x:Name="GameCanvas"
+                Width="800"
+                Height="450"
+                Background="SkyBlue">
 
-		<Ellipse x:Name="Bird"
-                 Width="62"
-                 Height="46">
-			<Ellipse.Fill>
-				<ImageBrush ImageSource="/madar.png"/>
-			</Ellipse.Fill>
-		</Ellipse>
+			<Ellipse x:Name="Bird"
+                     Width="62"
+                     Height="46">
+				<Ellipse.Fill>
+					<ImageBrush ImageSource="/madar.png"/>
+				</Ellipse.Fill>
+			</Ellipse>
 
-		<TextBlock x:Name="ScoreText"
-                   FontSize="24"
-                   FontWeight="Bold"
-                   Foreground="Black"
-                   Text="0"
-                   Canvas.Left="20"
-                   Canvas.Top="20"/>
+			<TextBlock x:Name="ScoreText"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="Black"
+                       Text="0"
+                       Canvas.Left="20"
+                       Canvas.Top="20"/>
 
-		<Rectangle x:Name="Fog"
-                   Width="800"
-                   Height="450"
-                   Fill="LightGray"
-                   Opacity="0.35"
-                   Visibility="Hidden"/>
+			<Rectangle x:Name="Fog"
+                       Width="800"
+                       Height="450"
+                       Fill="LightGray"
+                       Opacity="0.35"
+                       Visibility="Hidden"/>
+		</Canvas>
 
 		<Grid x:Name="StartMenu"
-              Width="800"
-              Height="450"
               Background="#AA000000">
 			<StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-
 				<TextBlock Text="FLAPPY BIRD"
                            FontSize="72"
                            FontWeight="Bold"
                            Foreground="Yellow"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30"/>
-
 				<Button Content="INDÍTÁS"
                         Width="200"
                         Height="60"
@@ -59,21 +58,16 @@
 		</Grid>
 
 		<Grid x:Name="GameOverMenu"
-              Width="800"
-              Height="450"
               Background="#AA000000"
               Visibility="Hidden">
-
 			<StackPanel HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-
 				<TextBlock Text="GAME OVER"
                            FontSize="72"
                            FontWeight="Bold"
                            Foreground="Red"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30"/>
-
 				<Button Content="ÚJRAINDÍTÁS"
                         Width="220"
                         Height="60"
@@ -81,6 +75,5 @@
                         Click="RestartButton_Click"/>
 			</StackPanel>
 		</Grid>
-
-	</Canvas>
+	</Grid>
 </Window>
